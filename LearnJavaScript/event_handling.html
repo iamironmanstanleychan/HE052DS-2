@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Click Example</title>
+</head>
+<body>
+    <!-- Buttons with unique IDs and click count display -->
+    <div>
+        <button id="button0">Button 0 (Global)</button>
+        <span id="count0">0</span> clicks
+    </div>
+    <hr>
+    <div>
+        <button id="button1">Button 1 (Encapsulated)</button>
+        <span id="count1">0</span> clicks
+    </div>
+    <hr>
+    <div>
+        <button id="button2">Button 2 (Callback)</button>
+        <span id="count2">0</span> clicks
+    </div>
+    <hr>
+    <div>
+        <button id="button3">Button 3 (Show Button 2 Clicks)</button>
+        <span id="count3">0</span> clicks
+    </div>
+
+    <script>
+        // Global button setup
+        document.getElementById('button0').addEventListener('click', function() {
+            alert('Button 0 clicked');
+            var count0 = document.getElementById('count0');
+            count0.textContent = parseInt(count0.textContent) + 1;
+        });
+
+        // Encapsulated button setup
+        (function() {
+            function setupButton1() {
+                document.getElementById('button1').addEventListener('click', function() {
+                    alert('Button 1 clicked');
+                    let count1 = document.getElementById('count1');
+                    count1.textContent = parseInt(count1.textContent) + 1;
+                });
+            }
+
+            // Run the setupButton1 function when the page loads
+            window.onload = setupButton1;
+        })(); // IIFE to encapsulate the button setup logic
+
+        // Callback function for button2
+        function setupButton2(callback) {
+            document.getElementById('button2').addEventListener('click', callback);
+        }
+
+        // Define the callback function
+        function button2Callback() {
+            alert('Button 2 clicked');
+            let count2 = document.getElementById('count2');
+            count2.textContent = parseInt(count2.textContent) + 1;
+            console.log('Updated count2:', count2.textContent); // Debug log
+        }
+
+        // Setup button2 with the callback function
+        setupButton2(button2Callback);
+
+        // Example of memory feature using closure
+        function createCounter() {
+            let count = 0; // This variable is enclosed in the closure
+            return function() {
+                count++;
+                return count;
+            };
+        }
+
+        // Create a counter instance
+        const counter = createCounter();
+
+        // Remove the second event listener for button2
+        // document.getElementById('button2').addEventListener('click', function() {
+        //     let count2 = document.getElementById('count2');
+        //     count2.textContent = counter(); // This will increment the count each time button2 is clicked
+        // });
+
+        // Setup button3 to show how many times button2 has been clicked
+        document.getElementById('button3').addEventListener('click', function() {
+            let count2 = parseInt(document.getElementById('count2').textContent); // Ensure count2 is an integer
+            console.log('Button 2 click count:', count2); // Debug log
+            alert('Button 2 has been clicked ' + count2 + ' times');
+        });
+
+        // Purpose of the callback:
+        // The callback function allows us to define custom behavior that will be executed when the event occurs.
+        // It provides flexibility and reusability, as the same setup function can be used with different callback functions.
+    </script>
+</body>
+</html>

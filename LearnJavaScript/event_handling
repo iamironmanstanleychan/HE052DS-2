@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Click Example</title>
+</head>
+<body>
+    <button id="button0">Button 0</button>
+    <button id="button1">Button 1</button>
+    <button id="button2">Button 2</button>
+
+    <script>
+        function setupButtons() {
+            for (var i = 0; i < 3; i++) {
+                // The closure is created here
+                document.getElementById('button' + i).addEventListener('click', (function(i) {
+                    // This function is returned and assigned as the event handler
+                    return function() {
+                        alert('Button ' + i + ' clicked');
+                    };
+                })(i)); // Immediately invoked function expression (IIFE) to capture the current value of 'i'
+            }
+        }
+
+        // Run the setupButtons function when the page loads
+        window.onload = setupButtons;
+    </script>
+</body>
+</html>

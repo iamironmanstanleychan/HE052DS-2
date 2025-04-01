@@ -1,0 +1,33 @@
+// This function takes an outer variable and returns an inner function
+function outerFunction(outerVariable) {
+    // The inner function takes an inner variable
+    function innerFunction(innerVariable) {
+      // It combines the outer and inner variables and logs the result
+      console.log(outerVariable + innerVariable);
+    }
+    // Return the inner function, forming a closure
+    return innerFunction;
+  }
+  
+  // Create a closure by calling outerFunction with "Hello, "
+  const myInnerFunction = outerFunction("Hello, ");
+  
+  // Call the closure with "World!" to log "Hello, World!"
+  myInnerFunction("World!"); // Output: "Hello, World!"
+
+  // This function takes a greeting and returns a function that takes a name
+function createGreetingFunction(greeting) {
+  // The returned function takes a name
+  function greet(name) {
+    // It combines the greeting and name and logs the result
+    console.log(greeting + name);
+  }
+  // Return the greet function, forming a closure
+  return greet;
+}
+
+// Create a closure by calling createGreetingFunction with "\nHi, "
+const myGreetingFunction = createGreetingFunction("\nHi, ");
+
+// Call the closure with "Hong Kong" to log "\nHi, Hong Kong"
+myGreetingFunction("Hong Kong"); // Output: "\nHi, Hong Kong"
